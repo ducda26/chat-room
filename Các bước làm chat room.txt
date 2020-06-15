@@ -1,0 +1,11 @@
+
+
+Bước 1: Thước kế giao diên font-end trong thư mục public
+
+Bước 2: Khởi tạo npm init
+
+Bước 3: Cài đặt các framworks
+npm install express socket.io moment --save
+
+Tự khởi động: npm install -D nodemon
+

@@ -17,7 +17,7 @@ io.on('connection', socket => {
     // Welcome current user
     socket.emit('message', 'Welcome to ChatCord!') //(4) gửi thông điệp cho khách hàng
     
-    // Broadcast when a user connects
+    // Broadcast when a user connects (4)
     socket.broadcast.emit('message','A user has joined the chat')
 
     // Runs when client disconnects
