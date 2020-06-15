@@ -12,7 +12,24 @@ app.use(express.static(path.join(__dirname, 'public'))); //(1) Dẫn đến thư
 
 // Run when client connects
 io.on('connection', socket => {
-    console.log('New WS Connection...');
+    //console.log('New WS Connection...'); chủ yếu để check
+    
+    // Welcome current user
+    socket.emit('message', 'Welcome to ChatCord!') //(4) gửi thông điệp cho khách hàng
+    
+    // Broadcast when a user connects
+    socket.broadcast.emit('message','A user has joined the chat')
+
+    // Runs when client disconnects
+    socket.on('disconnect', () => {
+        io.emit('message', 'A user has left the chat');
+    });
+
+    socket.on('chatMessage', msg => { //(5)
+        // const user = getCurrentUser(socket.id);
+        console.log(msg);      
+        io.emit('message', msg);
+      });
 });
 
 const PORT = 3000 || process.env.PORT;
