@@ -1,5 +1,7 @@
 const chatForm = document.getElementById('chat-form') // 4
 const chatMessages = document.querySelector('.chat-messages') // 6
+const roomName = document.getElementById('room-name'); // 21
+const userList = document.getElementById('users'); //22
 
 // Get username and room from URL (10)
 const { username, room } = Qs.parse(location.search, {
@@ -12,6 +14,12 @@ const socket = io(); // (3)
 
 // Join chatroom
 socket.emit('joinRoom', { username, room }); // (11)
+
+// Get room and users (19)
+socket.on('roomUsers', ({ room, users }) => {
+  outputRoomName(room);
+  outputUsers(users);
+});
 
 //Message form server
 socket.on('message', message => {
@@ -46,4 +54,16 @@ function outputMessage(message) {
     ${message.text} 
   </p>`;
   document.querySelector('.chat-messages').appendChild(div);
+}
+
+// Add room name to DOM (20)
+function outputRoomName(room) {
+  roomName.innerText = room; // 22
+}
+
+// Add users to DOM (20)
+function outputUsers(users) {
+  userList.innerHTML = ` 
+    ${users.map(user => `<li>${user.username}</li>`).join('')}
+  `; //22
 }
